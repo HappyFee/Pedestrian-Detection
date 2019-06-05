@@ -1,6 +1,6 @@
 # Pedestrian Detection papers
 
-  This is derivative work of xingkongliang(https://github.com/xingkongliang)'s [Pedestrian-Detection](https://github.com/xingkongliang/Pedestrian-Detection)
+  This is derivative work of xingkongliang(https://github.com/xingkongliang) 's [Pedestrian-Detection](https://github.com/xingkongliang/Pedestrian-Detection)
 <h3><b><u>TABLE OF CONTENTS</u></b></h3>
 <a href="#Datasets" >&#9635 Datasets</a><br>
 <a href="#PaperList" >&#9635 Paper List</a><br>
