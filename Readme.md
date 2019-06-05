@@ -22,7 +22,7 @@ CityPersons数据集是在Cityscapes数据集基础上建立的，使用了Citys
 - [**标注和评估文件**](https://bitbucket.org/shanshanzhang/citypersons)
 - [**数据集下载**](https://www.cityscapes-dataset.com/)
 
-<a href="format.md" ><button style="font-size: 20px; color: white; background-color: steelblue; height: 50px; border-radius: 10px; " > >>> Format of Datasets </button></a>
+<a href="Format.md" ><button style="font-size: 20px; color: white; background-color: steelblue; height: 50px; border-radius: 10px; " > >>> Format of Datasets </button></a>
 
 文件格式
 
