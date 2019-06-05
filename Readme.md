@@ -2,7 +2,7 @@
 
   This is derivative work of [xingkongliang](https://github.com/xingkongliang)'s [Pedestrian-Detection](https://github.com/xingkongliang/Pedestrian-Detection)
 <h3><b><u>TABLE OF CONTENTS</u></b></h3>
-<a href="#Datasets" >&#9635 Datasets</a><br>
+<a href="#Datasets" >&#9635 Datasets and Comparison</a><br>
 <a href="#PaperList" >&#9635 Paper List</a><br>
 <a href="#PaperwithCode" >&#9635 Paper with Code</a><br>
 
