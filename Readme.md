@@ -1,17 +1,121 @@
-# 行人检测（Pedestrian Detection）论文整理
+# Pedestrian Detection papers
 
-@(论文学习记录)[Paper, Pedestrian Detection]
 
-[toc]
+<h3><b><u>TABLE OF CONTENTS</u></b></h3>
+<a href="#Datasets" >&#9635 Datasets</a><br>
+<a href="#PaperList" >&#9635 Paper List</a><br>
+<a href="#PaperwithCode" >&#9635 Paper with Code</a><br>
 
-## 相关科研工作者
-- [Piotr Dollár scholar](https://scholar.google.com/citations?user=a8Y2OJMAAAAJ&hl=zh-CN)
-- [Piotr Dollár homepage](https://pdollar.github.io/)
-- [张姗姗 scholar](https://scholar.google.com/citations?hl=zh-CN&user=pOSMWfQAAAAJ&view_op=list_works&sortby=pubdate)
-- [张姗姗 homepage](https://sites.google.com/site/shanshanzhangshomepage/)
+<div id="Datasets"></div>
+## Datasets
 
-- [欧阳万里 scholar](https://scholar.google.com/citations?user=pw_0Z_UAAAAJ&%20hl=en)
-- [欧阳万里 homepage](http://www.ee.cuhk.edu.hk/~wlouyang/)
+### CityPersons
+
+![Alt text](./Images/1538102251965.png)
+
+
+CityPersons数据集是在Cityscapes数据集基础上建立的，使用了Cityscapes数据集的数据，对一些类别进行了精确的标注。该数据集是在[CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection这篇论文中提出的，更多细节可以通过阅读该论文了解。
+
+上图中左侧是行人标注，右侧是原始的CityScapes数据集。
+
+- [**标注和评估文件**](https://bitbucket.org/shanshanzhang/citypersons)
+- [**数据集下载**](https://www.cityscapes-dataset.com/)
+文件格式
+
+```
+#评测文件
+$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/coco.py
+$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/eval_demo.py
+$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/eval_MR_multisetup.py
+
+#注释文件
+$/Cityscapes/shanshanzhang-citypersons/annotations
+$/Cityscapes/shanshanzhang-citypersons/annotations/anno_train.mat
+$/Cityscapes/shanshanzhang-citypersons/annotations/anno_val.mat
+$/Cityscapes/shanshanzhang-citypersons/annotations/README.txt
+#图片数据
+
+$/Cityscapes/leftImg8bit/train/*
+$/Cityscapes/leftImg8bit/val/*
+$/Cityscapes/leftImg8bit/test/*
+```
+
+注释文件格式
+```
+CityPersons annotations
+(1) data structure:
+    one image per cell
+    in each cell, there are three fields: city_name; im_name; bbs (bounding box annotations)
+
+(2) bounding box annotation format:
+　　 one object instance per row:
+　　 [class_label, x1,y1,w,h, instance_id, x1_vis, y1_vis, w_vis, h_vis]
+
+(3) class label definition:
+　 class_label =0: ignore regions (fake humans, e.g. people on posters, reflections etc.)
+    class_label =1: pedestrians
+    class_label =2: riders
+    class_label =3: sitting persons
+    class_label =4: other persons with unusual postures
+    class_label =5: group of people
+
+(4) boxes:
+　　visible boxes [x1_vis, y1_vis, w_vis, h_vis] are automatically generated from segmentation masks;
+      (x1,y1) is the upper left corner.
+      if class_label==1 or 2
+        [x1,y1,w,h] is a well-aligned bounding box to the full body ;
+      else
+        [x1,y1,w,h] = [x1_vis, y1_vis, w_vis, h_vis];
+```
+
+### Caltech
+- [**Caltech官网**](http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/)
+更所细节请阅读这篇论文，
+[[TAPAMI-2012] Pedestrian Detection: An Evaluation of the State of the Art
+](http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/files/PAMI12pedestrians.pdf)
+
+![Alt text](./Images/1538102269692.png)
+
+
+## 性能比较
+|Method |MR-O   MR-N (Reasonable) |MR-O(occ = Partial) |MR-O(Reasonable_occ = heavy) |RT(ms)|
+|:--:|:--:|:--:|:--:|:--:|
+|MS-CNN     |9.95         8.08|19.24      |59.94      |64|
+|RPN+BF     |9.58  7.28|24.23      |74.36      |88|
+|F-DNN      |8.65  6.89|15.41      |55.13      |--|
+|TLL(MRF)+LSTM|7.40  --|--         |--         |--|
+|ALFNet     |--    6.10  |--         |--         |--|
+|SDS-RCNN   |7.36  6.44  |14.86      |58.55      |95|
+|FRCNN+ATT-vbb|10.33  -- |--         |45.18      |--|
+|PDOE+RPN   |7.60  --    |13.30      |44.40      |--|
+|GDFL       |7.85  --    |16.74      |43.18      |--|
+|DSSD+Grid  |10.85 --    |24.28      |42.42      |--|
+|AR-RPN     |8.01  5.78  |16.30      |58.06      |86|
+|RepLoss    |--    5.00  |--         |--         |--|
+|AR-Red     |6.45  4.36  |11.93      |48.80      |91|
+|CSP        |--    4.5   |--         |--         |--|
+|RepLoss+CityPersons|--   4.00  |--         |--         |--|
+|CSP+CityPersons|--   3.8|--         |--         |--|
+|FRCNN+Crowdhuman|--   3.46|--         |--         |--|
+### KITTI
+![Alt text](./Images/1538102334070.png)
+
+![Alt text](./Images/1538102328561.png)
+
+- [**KITTI官网**](http://www.cvlibs.net/datasets/kitti/) 
+
+
+
+## 性能比较
+
+
+|Method	|MR (Reasonable)	|MR (Reasonable_small)	|MR (Reasonable_occ=heavy)	|MR (All)|
+|:--:|:--:|:--:|:--:|:--:|
+|OR-CNN	            |11.32%	|14.19%	|51.43%	|40.19%|
+|Repultion Loss	    |11.48%	|15.67%	|52.59%	|39.17%|
+|Adapted FasterRCNN	|12.97%	|37.24%	|50.47%	|43.86%|
+
+<div id="PaperList"></div>
 
 ## Paper List
 - [CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection
@@ -55,15 +159,15 @@
 - [CVPR-2005] Histograms of Oriented Gradients for Human Detection
 
 
-## 行人检测开源代码
+<div id="PaperwithCode"></div>
 
+## Paper with Code
 
-
-## 论文
 
 ### [CVPR-2019] Adaptive NMS: Refining Pedestrian Detection in a Crowd
-![CVPR19_CSP_Adaptive_NMS](./Images/CVPR19_CSP_Adaptive_NMS.png)
-- paper: https://arxiv.org/abs/1904.02948
+
+![CVPR19_CSP_Adaptive_NMS](./Images/adaNMS.png)
+- paper: https://arxiv.org/abs/1904.03629
 
 ### [CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection
 
@@ -80,25 +184,24 @@
 
 - paper: https://arxiv.org/abs/1904.06859
 
+### [CVPR-2019] Pedestrian Detection with Autoregressive Network Phases
+
+![Alt text](./Images/AR-Ped.png)
+- paper: https://arxiv.org/abs/1812.00440
+- matlab github: https://github.com/garrickbrazil/AR-Ped
 
 ### [TIP-2018] Too Far to See? Not Really:- Pedestrian Detection with Scale-Aware Localization Policy
 ![Alt text| left | 300x0](./Images/1538101720619.png)
 
 - arxiv: https://arxiv.org/abs/1709.00235
 - paper: https://ieeexplore.ieee.org/document/8328854/
-- project website:
-- slides:
-- github caffe:
 
 ### [Transactions on Multimedia-2017] Scale-Aware Fast R-CNN for Pedestrian Detection
-![Alt text| left | 300x0](./Images/1538101749494.png)
 
+![Alt text| left | 300x0](./Images/1538101749494.png)
 
 - arxiv: https://arxiv.org/abs/1510.08160
 - paper: https://ieeexplore.ieee.org/abstract/document/8060595/
-- project website:
-- slides:
-- github caffe:
 
 </br>
 </br>
@@ -110,7 +213,7 @@
 - arxiv:
 - paper:http://openaccess.thecvf.com/content_ECCV_2018/papers/CHUNLUAN_ZHOU_Bi-box_Regression_for_ECCV_2018_paper.pdf
 - slides:
-- github:
+- pytorch-github:https://github.com/rainofmine/Bi-box_Regression
 
 
 ### [ECCV-2018] Learning Efficient Single-stage Pedestrian Detectors by Asymptotic Localization Fitting
@@ -183,6 +286,7 @@
 - project website:
 - slides:
 - github caffe:
+- implemented with SSD pytorch:https://github.com/bailvwangzi/repulsion_loss_ssd
 
 </br>
 </br>
@@ -299,8 +403,9 @@
 
 ### [ECCV-2016] Is Faster R-CNN Doing Well for Pedestrian Detection?
 
-- paper:
+- paper: https://arxiv.org/abs/1607.07032
 - project website:
+- matlab implementation on caffe-Faster: https://github.com/zhangliliang/RPN_BF/tree/RPN-pedestrian
 - slides:
 
 ### [CVPR-2016] How Far are We from Solving Pedestrian Detection?
@@ -368,90 +473,3 @@
 </br>
 </br>
 
-## 行人检测数据集
-
-### CityPersons
-
-![Alt text](./Images/1538102251965.png)
-
-
-CityPersons数据集是在Cityscapes数据集基础上建立的，使用了Cityscapes数据集的数据，对一些类别进行了精确的标注。该数据集是在[CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection这篇论文中提出的，更多细节可以通过阅读该论文了解。
-
-上图中左侧是行人标注，右侧是原始的CityScapes数据集。
-
-- [**标注和评估文件**](https://bitbucket.org/shanshanzhang/citypersons)
-- [**数据集下载**](https://www.cityscapes-dataset.com/)
-文件格式
-
-```
-#评测文件
-$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/coco.py
-$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/eval_demo.py
-$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/eval_MR_multisetup.py
-
-#注释文件
-$/Cityscapes/shanshanzhang-citypersons/annotations
-$/Cityscapes/shanshanzhang-citypersons/annotations/anno_train.mat
-$/Cityscapes/shanshanzhang-citypersons/annotations/anno_val.mat
-$/Cityscapes/shanshanzhang-citypersons/annotations/README.txt
-#图片数据
-
-$/Cityscapes/leftImg8bit/train/*
-$/Cityscapes/leftImg8bit/val/*
-$/Cityscapes/leftImg8bit/test/*
-```
-
-注释文件格式
-```
-CityPersons annotations
-(1) data structure:
-    one image per cell
-    in each cell, there are three fields: city_name; im_name; bbs (bounding box annotations)
-
-(2) bounding box annotation format:
-　　 one object instance per row:
-　　 [class_label, x1,y1,w,h, instance_id, x1_vis, y1_vis, w_vis, h_vis]
-
-(3) class label definition:
-　 class_label =0: ignore regions (fake humans, e.g. people on posters, reflections etc.)
-    class_label =1: pedestrians
-    class_label =2: riders
-    class_label =3: sitting persons
-    class_label =4: other persons with unusual postures
-    class_label =5: group of people
-
-(4) boxes:
-　　visible boxes [x1_vis, y1_vis, w_vis, h_vis] are automatically generated from segmentation masks;
-      (x1,y1) is the upper left corner.
-      if class_label==1 or 2
-        [x1,y1,w,h] is a well-aligned bounding box to the full body ;
-      else
-        [x1,y1,w,h] = [x1_vis, y1_vis, w_vis, h_vis];
-```
-
-### Caltech
-- [**Caltech官网**](http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/)
-更所细节请阅读这篇论文，
-[[TAPAMI-2012] Pedestrian Detection: An Evaluation of the State of the Art
-](http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/files/PAMI12pedestrians.pdf)
-
-![Alt text](./Images/1538102269692.png)
-
-
-### KITTI
-![Alt text](./Images/1538102334070.png)
-
-![Alt text](./Images/1538102328561.png)
-
-- [**KITTI官网**](http://www.cvlibs.net/datasets/kitti/) 
-
-
-
-## 性能比较
-
-
-|Method	|MR (Reasonable)	|MR (Reasonable_small)	|MR (Reasonable_occ=heavy)	|MR (All)|
-|:--:|:--:|:--:|:--:|:--:|
-|OR-CNN	            |11.32%	|14.19%	|51.43%	|40.19%|
-|Repultion Loss	    |11.48%	|15.67%	|52.59%	|39.17%|
-|Adapted FasterRCNN	|12.97%	|37.24%	|50.47%	|43.86%|
