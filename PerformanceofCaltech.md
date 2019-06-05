@@ -1,4 +1,4 @@
-###Comparison of Caltech Pedestrian Detection Datasets
+### Comparison of Caltech Pedestrian Detection Datasets
 
 |Method |MR-O (Reasonable) |MR-N (Reasonable) |MR-O(occ = Partial) |MR-O(Reasonable_occ = heavy) |RT(ms)|
 |:--:|:--:|:--:|:--:|:--:|:--:|
