@@ -167,7 +167,7 @@ CityPersons数据集是在Cityscapes数据集基础上建立的，使用了Citys
 - paper:http://openaccess.thecvf.com/content_ECCV_2018/papers/Chunze_Lin_Graininess-Aware_Deep_Feature_ECCV_2018_paper.pdf
 - project website:
 - slides:
-- github:
+- github:https://github.com/linchunze/GDFL
 
 ### [ECCV-2018] Occlusion-aware R-CNN: Detecting Pedestrians in a Crowd
 
